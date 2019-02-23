@@ -2,6 +2,7 @@ from IPython.core.magic import (Magics, magics_class, line_magic)
 from IPython.core.magic_arguments import (argument, magic_arguments, parse_argstring)
 from logging import error
 from os.path import getmtime
+from collections import OrderedDict
 
 @magics_class
 class IPythonCells(Magics):
@@ -21,9 +22,20 @@ class IPythonCells(Magics):
         self.load_cells()
 
     def load_cells(self):
-        self.cells = {
-            'foo': ['print(\'hello world!!!!!\')', 'a=456', 'print(b)']
-        }
+        """Read the given file and generate an ordered dictionary with the keys as
+        the cell names and values as the list of line strings in that cell.
+
+        The cell indicator is taken as '# %%' character.
+        """
+        file = open(self.filename, "r")
+        f = file.readlines()
+        self.cells = OrderedDict()
+        for line in f:
+            if line.startswith('# %%') or line.startswith('#%%'):
+                cell_name = line.lstrip('# %%').rstrip('\n')
+                self.cells[cell_name] = []
+                continue
+            self.cells[cell_name].append(line)
         self.load_time = getmtime(self.filename)
 
 
