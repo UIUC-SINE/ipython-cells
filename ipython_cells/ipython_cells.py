@@ -4,6 +4,7 @@ from IPython.core.magic_arguments import (argument, magic_arguments, parse_argst
 from logging import error
 from os.path import getmtime
 from collections import OrderedDict
+import re
 
 @magics_class
 class IPythonCells(Magics):
@@ -31,19 +32,28 @@ class IPythonCells(Magics):
         file = open(self.filename, "r")
         f = file.readlines()
         self.cells = OrderedDict()
-        for line in f:
-            if line.startswith('# %%') or line.startswith('#%%'):
-                cell_name = line.lstrip('# %%').rstrip('\n')
-                self.cells[cell_name] = []
-                continue
-            self.cells[cell_name].append(line)
-        self.load_time = getmtime(self.filename)
 
+        # loop lines in filename and create cells dictionary
+        for line in f:
+
+            # handle spyder and jupyter styles
+            jupyter_match = re.match('^#\sIn\[([^\]]+)\]', line)
+            spyder_match = re.match('^#\s?%%\s?(\S+)', line)
+            if jupyter_match is not None:
+                cell_name = jupyter_match.group(1)
+                self.cells[cell_name] = ''
+            elif spyder_match is not None:
+                cell_name = spyder_match.group(1)
+                self.cells[cell_name] = ''
+
+            self.cells[cell_name] += line
+
+        self.load_time = getmtime(self.filename)
 
     @line_magic
     @magic_arguments()
     @argument('cell_name', type=str, help='name of cell to run')
-    @argument('variable_overrides', nargs='*', type=str, help='override variable when running')
+    # @argument('variable_overrides', nargs='*', type=str, help='override variable when running')
     def cell_run(self, args_str):
         """Run a specific cell in the loaded py file"""
 
@@ -56,15 +66,30 @@ class IPythonCells(Magics):
 
         args = parse_argstring(self.cell_run, args_str)
 
-        if args.cell_name in self.cells.keys():
-            for variable in args.variable_overrides:
-                self.shell.ex(variable)
+        cell_name = args.cell_name.lstrip('^').rstrip('$')
+        to_first = args.cell_name.startswith('^')
+        to_last = args.cell_name.endswith('$')
 
-            self.shell.run_cell('\n'.join(self.cells[args.cell_name]))
+        # execute cell or cell range
+        if cell_name in self.cells.keys():
+            # for variable in args.variable_overrides:
+            #     self.shell.ex(variable)
+
+            index = list(self.cells.keys()).index(cell_name)
+
+            if to_first:
+                cells = list(self.cells.values())[0:index + 1]
+            elif to_last:
+                cells = list(self.cells.values())[index:]
+            else:
+                cells = [self.cells[cell_name]]
+
+            for cell in cells:
+                self.shell.run_cell(cell)
         else:
             error('No such cell {} found in {}'.format(
-                args.cell_name,
-                self.loaded
+                cell_name,
+                self.filename
             ))
 
 def load_ipython_extension(ip):
