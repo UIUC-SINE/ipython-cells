@@ -12,7 +12,9 @@ setup(
     license="GPLv3",
     keywords="jupyter ipython cells magic extension",
     url="https://github.com/uiuc-sine/ipython_cells",
-    install_requires=[],
+    install_requires=[
+        "IPython"
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
     ]
