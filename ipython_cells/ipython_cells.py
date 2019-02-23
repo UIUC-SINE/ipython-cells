@@ -1,3 +1,4 @@
+from IPython.core.getipython import get_ipython
 from IPython.core.magic import (Magics, magics_class, line_magic)
 from IPython.core.magic_arguments import (argument, magic_arguments, parse_argstring)
 from logging import error
@@ -66,5 +67,9 @@ class IPythonCells(Magics):
                 self.loaded
             ))
 
-ip = get_ipython()
-ip.register_magics(IPythonCells)
+def load_ipython_extension(ip):
+    """Load the extension in IPython."""
+    ip.register_magics(IPythonCells)
+
+if __name__ == "__main__":
+    load_ipython_extension(get_ipython())
