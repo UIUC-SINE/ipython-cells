@@ -1,6 +1,8 @@
 # ipython-cells
 
-IPython extension for executing cells Jupyter-style in .py files
+iPython extension for executing cells Jupyter-style in .py files.  Supports Jupyter and Spyder cell syntax.
+
+Brings the advantages of linear, selective-execution during development to iPython without the bloat of Jupyter.
 
 ## Example
 
@@ -39,7 +41,7 @@ In ipython:
 %cell_run cell1
 20
 
-# run also run all cells from beginning of file to cell2 (inclusive)
+# run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
 10
 11
@@ -48,6 +50,9 @@ In ipython:
 %cell_run cell1$
 12
 13
+
+%list_cells
+['__first', 'cell1', 'cell2']
 ```
 
 ## Installation
@@ -56,7 +61,9 @@ In ipython:
 pip install ipython-cells
 ```
 
-Optionally, add the following lines to `~/.ipython/profile_default/ipython_config.py`
+Optionally, automatically load ipython-cells when ipython starts
+
+`~/.ipython/profile_default/ipython_config.py`
 ``` python
 c.InteractiveShellApp.extensions = [
     'ipython_cells'

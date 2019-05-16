@@ -33,6 +33,10 @@ class IPythonCells(Magics):
         f = file.readlines()
         self.cells = OrderedDict()
 
+        # put all code above the first cell comment into a cell called __first
+        cell_name = '__first'
+        self.cells[cell_name] = ''
+
         # loop lines in filename and create cells dictionary
         for line in f:
 
@@ -91,6 +95,13 @@ class IPythonCells(Magics):
                 cell_name,
                 self.filename
             ))
+
+    @line_magic
+    def list_cells(self, args):
+        if hasattr(self, 'cells'):
+            print([name for name in self.cells.keys()])
+        else:
+            print('Run load_file first')
 
 def load_ipython_extension(ip):
     """Load the extension in IPython."""
