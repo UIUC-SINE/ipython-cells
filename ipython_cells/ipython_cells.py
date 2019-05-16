@@ -99,9 +99,9 @@ class IPythonCells(Magics):
     @line_magic
     def list_cells(self, args):
         if hasattr(self, 'cells'):
-            print([name for name in self.cells.keys()])
+            return [name for name in self.cells.keys()]
         else:
-            print('Run load_file first')
+            error("No file loaded.  Use %load_file to load a .py file")
 
 def load_ipython_extension(ip):
     """Load the extension in IPython."""

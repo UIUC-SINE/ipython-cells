@@ -9,6 +9,7 @@ setup(
     author_email="evan@evanw.org, ukamaci2@illinois.edu",
     description="Jupyter-like cell running in ipython",
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     license="GPLv3",
     keywords="jupyter ipython cells magic extension",
     url="https://github.com/uiuc-sine/ipython_cells",
