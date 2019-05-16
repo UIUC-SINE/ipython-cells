@@ -1,12 +1,12 @@
 # ipython-cells
 
-iPython extension for executing cells Jupyter-style in .py files.  Supports Jupyter and Spyder cell syntax.
+IPython extension for executing cells Jupyter-style in .py files.  Supports Jupyter and Spyder cell syntax.
 
-Brings the advantages of linear, selective-execution during development to iPython without the bloat of Jupyter.
+Brings the advantages of linear, selective-execution during development to IPython without the bloat of Jupyter.
 
-## Example
+#### Example
 
-Suppose we have a .py exported by Jupyter.
+We can execute the invidual cells in a `.py` file just like a Jupyter notebook.
 
 `example.py`
 
@@ -20,26 +20,44 @@ a += 1
 print(a)
 ```
 
-In ipython:
+In IPython:
 
 ``` python
 
-# load the extension
+# load the extension and a .py file
 %load_ext ipython_cells
-
-# load example.py and run a cell
 %load_file example.py
-%cell_run cell1
-10
 
-# load example.py with autoreloading
-%load_file example.py --autoreload
+# run some cells
 %cell_run cell1
 10
-# example.py is modified by an external editor (e.g. `a = 10`  ->  `a = 20`)
-# we detect that and automatically reload the cells
-%cell_run cell1
-20
+%cell_run cell2
+11
+
+# list available cells for running
+%list_cells
+['__first', 'cell1', 'cell2']
+```
+
+#### Installation
+
+``` bash
+pip install ipython-cells
+```
+
+Optionally, automatically load ipython-cells when IPython starts
+
+`~/.ipython/profile_default/ipython_config.py`
+``` python
+c.InteractiveShellApp.extensions = [
+    'ipython_cells'
+]
+```
+
+#### Execute a range of cells
+
+``` python
+%load_file example.py
 
 # run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
@@ -50,22 +68,29 @@ In ipython:
 %cell_run cell1$
 12
 13
-
-%list_cells
-['__first', 'cell1', 'cell2']
 ```
 
-## Installation
-
-``` bash
-pip install ipython-cells
-```
-
-Optionally, automatically load ipython-cells when ipython starts
-
-`~/.ipython/profile_default/ipython_config.py`
+#### Autoreloading
 ``` python
-c.InteractiveShellApp.extensions = [
-    'ipython_cells'
-]
+# load example.py with autoreloading
+%load_file example.py --autoreload
+
+%cell_run cell1
+10
+# example.py is modified by an external editor (e.g. `a = 10`  ->  `a = 20`)
+# File change is detected and automatically reloaded
+%cell_run cell1
+20
+
 ```
+
+#### Cell Delimiter Syntax
+
+Cells are delimited by special comments.  Both Jupyter and Spyder style cells are supported.
+
+Examples
+
+- `# %% foobar_cell`
+- `# In[foobar_cell]`
+- `# %% foobar_cell some extra text`
+- `# In[foobar_cell] some extra text`
