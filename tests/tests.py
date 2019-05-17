@@ -34,6 +34,11 @@ class Tests(unittest.TestCase):
         foo_compare += 3
         self.assertEqual(foo, foo_compare)
 
+        # test multi cell running
+        self.ip.magic('cell_run cell2 cell3')
+        foo_compare += 5
+        self.assertEqual(foo, foo_compare)
+
         # ----- test autoreloading -----
         foo = 0
         foo_compare = 0

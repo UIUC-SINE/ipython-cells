@@ -53,10 +53,11 @@ class IPythonCells(Magics):
             self.cells[cell_name] += line
 
         self.load_time = getmtime(self.filename)
+        self.shell.set_hook('complete_command', self.cell_run_complete, re_key='%cell_run')
 
     @line_magic
     @magic_arguments()
-    @argument('cell_name', type=str, help='name of cell to run')
+    @argument('cell_names', nargs='*', type=str, help='name of cell to run')
     # @argument('variable_overrides', nargs='*', type=str, help='override variable when running')
     def cell_run(self, args_str):
         """Run a specific cell in the loaded py file"""
@@ -70,31 +71,34 @@ class IPythonCells(Magics):
 
         args = parse_argstring(self.cell_run, args_str)
 
-        cell_name = args.cell_name.lstrip('^').rstrip('$')
-        to_first = args.cell_name.startswith('^')
-        to_last = args.cell_name.endswith('$')
+        for arg in args.cell_names:
 
-        # execute cell or cell range
-        if cell_name in self.cells.keys():
-            # for variable in args.variable_overrides:
-            #     self.shell.ex(variable)
+            cell_name = arg.lstrip('^').rstrip('$')
+            to_first = arg.startswith('^')
+            to_last = arg.endswith('$')
 
-            index = list(self.cells.keys()).index(cell_name)
+            # execute cell or cell range
+            if cell_name in self.cells.keys():
+                # for variable in args.variable_overrides:
+                #     self.shell.ex(variable)
 
-            if to_first:
-                cells = list(self.cells.values())[0:index + 1]
-            elif to_last:
-                cells = list(self.cells.values())[index:]
+                index = list(self.cells.keys()).index(cell_name)
+
+                if to_first:
+                    cells = list(self.cells.values())[0:index + 1]
+                elif to_last:
+                    cells = list(self.cells.values())[index:]
+                else:
+                    cells = [self.cells[cell_name]]
+
+                for cell in cells:
+                    self.shell.run_cell(cell)
             else:
-                cells = [self.cells[cell_name]]
-
-            for cell in cells:
-                self.shell.run_cell(cell)
-        else:
-            error('No such cell {} found in {}'.format(
-                cell_name,
-                self.filename
-            ))
+                error('No such cell {} found in {}'.format(
+                    cell_name,
+                    self.filename
+                ))
+                return
 
     @line_magic
     def list_cells(self, args):
@@ -102,6 +106,11 @@ class IPythonCells(Magics):
             return [name for name in self.cells.keys()]
         else:
             error("No file loaded.  Use %load_file to load a .py file")
+
+    def cell_run_complete(self, foo, event):
+        """Autocomplete for %cell_run"""
+
+        return self.cells
 
 def load_ipython_extension(ip):
     """Load the extension in IPython."""
