@@ -14,12 +14,13 @@ class IPythonCells(Magics):
     @line_magic
     @magic_arguments()
     @argument('filename', type=str, help='path to file')
-    @argument('--autoreload', action='store_true', default=False, help='automatically reload cells when file changes')
+    @argument('--noreload', action='store_true', default=False, help='dont automatically reload cells when file changes')
     def load_file(self, args_str):
         """Load a .py file for use with %cell_run"""
+
         args = parse_argstring(self.load_file, args_str)
         self.filename = args.filename
-        self.autoreload = args.autoreload
+        self.noreload = args.noreload
 
         self.load_cells()
 
@@ -29,6 +30,7 @@ class IPythonCells(Magics):
 
         The cell indicator is taken as '# %%' character.
         """
+
         file = open(self.filename, "r")
         f = file.readlines()
         self.cells = OrderedDict()
@@ -66,7 +68,7 @@ class IPythonCells(Magics):
             error("No file loaded.  Use %load_file to load a .py file")
             return
 
-        if self.autoreload and self.load_time < getmtime(self.filename):
+        if not self.noreload and self.load_time < getmtime(self.filename):
             self.load_cells()
 
         args = parse_argstring(self.cell_run, args_str)
@@ -102,18 +104,22 @@ class IPythonCells(Magics):
 
     @line_magic
     def list_cells(self, args):
+        """Return a list of loaded cells"""
+
         if hasattr(self, 'cells'):
-            return [name for name in self.cells.keys()]
+            return list(self.cells.keys())
         else:
             error("No file loaded.  Use %load_file to load a .py file")
 
     def cell_run_complete(self, foo, event):
         """Autocomplete for %cell_run"""
 
-        return self.cells
+        return list(self.cells.keys())
+
 
 def load_ipython_extension(ip):
     """Load the extension in IPython."""
+
     ip.register_magics(IPythonCells)
 
 if __name__ == "__main__":

@@ -73,7 +73,7 @@ c.InteractiveShellApp.extensions = [
 #### Autoreloading
 ``` python
 # load example.py with autoreloading
-%load_file example.py --autoreload
+%load_file example.py
 
 %cell_run cell1
 10
@@ -83,6 +83,8 @@ c.InteractiveShellApp.extensions = [
 20
 
 ```
+
+Auto reloading can be disabled with `%load_file example.py --noreload`
 
 #### Cell Delimiter Syntax
 
