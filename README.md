@@ -31,7 +31,6 @@ print('hello')
 print('world')
 ```
 
-
 #### Other Features
 
 ``` python
@@ -86,3 +85,9 @@ Cells are delimited by special comments.  Both Jupyter and Spyder style cells ar
 - `# In[foobar_cell]`
 - `# %% foobar_cell some extra text`
 - `# In[foobar_cell] some extra text`
+
+#### Running Exported Jupyter Notebooks
+
+This extension can run exported Jupyter notebooks. (`File > Download As > python (.py)`).
+
+Be sure to run all cells before exporting so they are assigned an index. (`Cell > Run All`).
