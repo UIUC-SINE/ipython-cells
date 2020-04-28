@@ -1,9 +1,10 @@
 import unittest
 import shutil
 from IPython.testing.globalipapp import get_ipython
-from IPython.utils.io import capture_output
+# from IPython.utils.io import capture_output
 
 class Tests(unittest.TestCase):
+
     @classmethod
     def setUpClass(self):
         self.ip = get_ipython()
@@ -16,44 +17,37 @@ class Tests(unittest.TestCase):
 
     def test_run_cells(self):
         global foo
-        foo = 0
-        foo_compare = 0
+
+        # test __first
+        self.ip.magic('cell_run __first')
+        self.assertEqual(foo, 1)
 
         # test caret syntax
+        foo = 0
         self.ip.magic('cell_run ^cell1')
-        foo_compare += 2
-        self.assertEqual(foo, foo_compare)
+        self.assertEqual(foo, 1)
 
         # test dollar syntax
+        foo = 0
         self.ip.magic('cell_run cell2$')
-        foo_compare += 5
-        self.assertEqual(foo, foo_compare)
-
-        # test single cell running
-        self.ip.magic('cell_run cell3')
-        foo_compare += 3
-        self.assertEqual(foo, foo_compare)
+        self.assertEqual(foo, 5)
 
         # test multi cell running
+        foo = 0
         self.ip.magic('cell_run cell2 cell3')
-        foo_compare += 5
-        self.assertEqual(foo, foo_compare)
+        self.assertEqual(foo, 5)
 
         # ----- test autoreloading -----
-        foo = 0
-        foo_compare = 0
 
         shutil.copy('example.py', 'tmp_example.py')
-        self.ip.magic('load_file tmp_example.py --autoreload')
+        self.ip.magic('load_file tmp_example.py')
         self.ip.magic('cell_run cell1')
-        foo_compare += 1
-        self.assertEqual(foo, foo_compare)
+        self.assertEqual(foo, 1)
 
         # test that modified cell is run
         shutil.copy('example_edited.py', 'tmp_example.py')
         self.ip.magic('cell_run cell1')
-        foo_compare += 2
-        self.assertEqual(foo, foo_compare)
+        self.assertEqual(foo, 2)
 
 if __name__ == '__main__':
     unittest.main()

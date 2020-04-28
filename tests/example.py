@@ -4,7 +4,7 @@ foo = 1
 
 # %% cell1
 
-foo += 1
+foo = 1
 
 # %% cell2
 

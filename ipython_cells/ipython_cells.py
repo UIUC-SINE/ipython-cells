@@ -31,8 +31,9 @@ class IPythonCells(Magics):
         The cell indicator is taken as '# %%' character.
         """
 
-        file = open(self.filename, "r")
-        f = file.readlines()
+        with open(self.filename, 'r') as f:
+            lines = f.readlines()
+
         self.cells = OrderedDict()
 
         # put all code above the first cell comment into a cell called __first
@@ -40,7 +41,7 @@ class IPythonCells(Magics):
         self.cells[cell_name] = ''
 
         # loop lines in filename and create cells dictionary
-        for line in f:
+        for line in lines:
 
             # handle spyder and jupyter styles
             jupyter_match = re.match('^#\sIn\[([^\]]+)\]', line)

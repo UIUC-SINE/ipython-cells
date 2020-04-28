@@ -91,3 +91,8 @@ Cells are delimited by special comments.  Both Jupyter and Spyder style cells ar
 This extension can run exported Jupyter notebooks. (`File > Download As > python (.py)`).
 
 Be sure to run all cells before exporting so they are assigned an index. (`Cell > Run All`).
+
+#### Tests
+
+    cd tests
+    ipython3 tests.py
