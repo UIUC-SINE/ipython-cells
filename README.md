@@ -4,60 +4,42 @@ IPython extension for executing cells Jupyter-style in .py files.  Supports Jupy
 
 Brings the advantages of linear, selective-execution during development to IPython without the bloat of Jupyter.
 
-#### Example
+#### Quickstart
 
-We can execute the invidual cells in a `.py` file just like a Jupyter notebook.
+Install the extension
+
+    pip install ipython-cells
+
+In IPython:
+
+``` python
+>>> %load_ext ipython_cells
+>>> %load_file example.py
+>>> %cell_run 1
+hello
+>>> %cell_run 2
+world
+```
 
 `example.py`
 
 ``` python
 # %% cell1
-a = 10
-print(a)
+print('hello')
 
 # %% cell2
-a += 1
-print(a)
+print('world')
 ```
 
-In IPython:
+
+#### Other Features
 
 ``` python
-
-# load the extension and a .py file
-%load_ext ipython_cells
 %load_file example.py
-
-# run some cells
-%cell_run cell1
-10
-%cell_run cell2
-11
 
 # list available cells for running
 %list_cells
 ['__first', 'cell1', 'cell2']
-```
-
-#### Installation
-
-``` bash
-pip install ipython-cells
-```
-
-Optionally, automatically load ipython-cells when IPython starts
-
-`~/.ipython/profile_default/ipython_config.py`
-``` python
-c.InteractiveShellApp.extensions = [
-    'ipython_cells'
-]
-```
-
-#### Execute a range of cells
-
-``` python
-%load_file example.py
 
 # run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
@@ -68,6 +50,16 @@ c.InteractiveShellApp.extensions = [
 %cell_run cell1$
 12
 13
+```
+
+#### Automatically Load Extension
+
+To load extension on IPython start, add this to `~/.ipython/profile_default/ipython_config.py`
+
+``` python
+c.InteractiveShellApp.extensions = [
+    'ipython_cells'
+]
 ```
 
 #### Autoreloading
@@ -88,9 +80,7 @@ Auto reloading can be disabled with `%load_file example.py --noreload`
 
 #### Cell Delimiter Syntax
 
-Cells are delimited by special comments.  Both Jupyter and Spyder style cells are supported.
-
-Examples
+Cells are delimited by special comments.  Both Jupyter and Spyder style cells are supported.  Below are different variations of a cell called `foobar_cell`.
 
 - `# %% foobar_cell`
 - `# In[foobar_cell]`
