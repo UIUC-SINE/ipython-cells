@@ -15,9 +15,9 @@ In IPython:
 ``` python
 >>> %load_ext ipython_cells
 >>> %load_file example.py
->>> %cell_run 1
+>>> %cell_run cell1
 hello
->>> %cell_run 2
+>>> %cell_run cell2
 world
 ```
 
@@ -42,13 +42,13 @@ print('world')
 
 # run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
-10
-11
+hello
+world
 
 # run all cells from cell1 (inclusive) to end of file
 %cell_run cell1$
-12
-13
+hello
+world
 ```
 
 #### Automatically Load Extension
