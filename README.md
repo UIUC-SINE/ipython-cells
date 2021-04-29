@@ -1,14 +1,23 @@
 # ipython-cells
 
-IPython extension for executing cells Jupyter-style in .py files.  Supports Jupyter and Spyder cell syntax.
+Jupyter for the IPython shell.  Execute commented cells in .py files in the style of Jupyter notebooks without leaving your terminal. Supports Spyder and Jupyter comment syntax.
 
-Brings the advantages of linear, selective-execution during development to IPython without the bloat of Jupyter.
 
 #### Quickstart
 
 Install the extension
 
     pip install ipython-cells
+
+`example.py`
+
+``` python
+# %% cell1
+print('hello')
+
+# %% cell2
+print('world')
+```
 
 In IPython:
 
@@ -21,15 +30,8 @@ hello
 world
 ```
 
-`example.py`
+`example.py` is automatically reloaded when modified by an external editor.
 
-``` python
-# %% cell1
-print('hello')
-
-# %% cell2
-print('world')
-```
 
 #### Other Features
 
@@ -40,12 +42,12 @@ print('world')
 %list_cells
 ['__first', 'cell1', 'cell2']
 
-# run all cells from beginning of file to cell2 (inclusive)
+# cell ranges - run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
 hello
 world
 
-# run all cells from cell1 (inclusive) to end of file
+# cell ranges - run all cells from cell1 (inclusive) to end of file
 %cell_run cell1$
 hello
 world
