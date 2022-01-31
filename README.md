@@ -13,13 +13,16 @@ With ipython-cells:
 
 ## Quickstart
 
-Install the extension
+Install the extension:
 
     pip install ipython-cells
     
-Convert an existing `.ipynb` to `.py`.  In Jupyter: `Cell > Run All`, then `File > Download As > python (.py)`.
+Convert an existing notebook to a Python file (In Jupyter):
 
-Execute cells in iPython
+    Cell > Run All
+    File > Download As > python (.py)
+
+Execute cells in iPython:
 
 ``` python
 >>> %load_ext ipython_cells
@@ -30,7 +33,8 @@ array([1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j])
 ```
 
 You can freely add/delete/rename cells in the downloaded `my_notebook.py`.  `my_notebook.py` is automatically reloaded when changes are made.
-
+   
+Alternatively, you can create a new .py file from scratch without starting from a Jupyter notebook.  See the [cell delimiter syntax](#cell-delimiter-syntax).
 
 ## Other Features
 
