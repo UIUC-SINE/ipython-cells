@@ -11,11 +11,50 @@ With ipython-cells:
 ![](commandline.png)
 
 
-#### Quickstart
+## Quickstart
 
 Install the extension
 
     pip install ipython-cells
+    
+Convert an existing `.ipynb` to `.py`
+
+    jupyter nbconvert my_notebook.ipynb --to python
+    
+Execute cells in iPython
+
+``` python
+>>> %load_ext ipython_cells
+>>> %load_file my_notebook.py
+>>> %cell_run 1
+>>> %cell_run 2
+array([1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j])
+```
+
+`my_notebook.py` is automatically reloaded when changes are made.
+
+
+## Other Features
+
+Other commands:
+
+``` python
+# list available cells for running
+%list_cells
+['__first', 'cell1', 'cell2']
+
+# cell ranges - run all cells from beginning of file to cell2 (inclusive)
+%cell_run ^cell2
+hello
+world
+
+# cell ranges - run all cells from cell1 (inclusive) to end of file
+%cell_run cell1$
+hello
+world
+```
+
+Spyder cell delimiter syntax is also supported:
 
 `example.py`
 
@@ -38,34 +77,7 @@ hello
 world
 ```
 
-`example.py` is automatically reloaded when modified by an external editor.
-
-Convert an existing `.ipynb` to a `.py` with
-
-    jupyter nbconvert my_notebook.ipynb --to python
-
-
-#### Other Features
-
-``` python
-%load_file example.py
-
-# list available cells for running
-%list_cells
-['__first', 'cell1', 'cell2']
-
-# cell ranges - run all cells from beginning of file to cell2 (inclusive)
-%cell_run ^cell2
-hello
-world
-
-# cell ranges - run all cells from cell1 (inclusive) to end of file
-%cell_run cell1$
-hello
-world
-```
-
-#### Automatically Load Extension
+## Automatically Load Extension
 
 To load extension on IPython start, add this to `~/.ipython/profile_default/ipython_config.py`
 
@@ -75,7 +87,7 @@ c.InteractiveShellApp.extensions = [
 ]
 ```
 
-#### Autoreloading
+## Autoreloading
 ``` python
 # load example.py with autoreloading
 %load_file example.py
@@ -91,7 +103,7 @@ c.InteractiveShellApp.extensions = [
 
 Auto reloading can be disabled with `%load_file example.py --noreload`
 
-#### Cell Delimiter Syntax
+## Cell Delimiter Syntax
 
 Cells are delimited by special comments.  Both Jupyter and Spyder style cells are supported.  Below are different variations of a cell called `foobar_cell`.
 
@@ -100,13 +112,13 @@ Cells are delimited by special comments.  Both Jupyter and Spyder style cells ar
 - `# %% foobar_cell some extra text`
 - `# In[foobar_cell] some extra text`
 
-#### Running Exported Jupyter Notebooks
+## Running Exported Jupyter Notebooks
 
 This extension can run exported Jupyter notebooks. (`File > Download As > python (.py)`).
 
 Be sure to run all cells before exporting so they are assigned an index. (`Cell > Run All`).
 
-#### Tests
+## Tests
 
     cd tests
     ipython3 tests.py
