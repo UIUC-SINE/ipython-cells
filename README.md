@@ -1,6 +1,14 @@
 # ipython-cells
 
-Jupyter for the IPython shell.  Execute commented cells in .py files in the style of Jupyter notebooks without leaving your terminal. Supports Spyder and Jupyter comment syntax.
+This is an IPython extension for those who prefer to work in a terminal but still need the cell-by-cell execution provided by a Jupyter notebook.
+
+In Jupyter Notebook:
+
+![](notebook.png)
+
+With ipython-cells:
+
+![](commandline.png)
 
 
 #### Quickstart
@@ -31,6 +39,10 @@ world
 ```
 
 `example.py` is automatically reloaded when modified by an external editor.
+
+Convert an existing `.ipynb` to a `.py` with
+
+    jupyter nbconvert my_notebook.ipynb --to python
 
 
 #### Other Features
