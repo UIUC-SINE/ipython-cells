@@ -39,10 +39,6 @@ array([1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j])
 Other commands:
 
 ``` python
-# list available cells for running
-%list_cells
-['__first', 'cell1', 'cell2']
-
 # cell ranges - run all cells from beginning of file to cell2 (inclusive)
 %cell_run ^cell2
 hello
@@ -52,6 +48,10 @@ world
 %cell_run cell1$
 hello
 world
+
+# list available cells for running
+%list_cells
+['__first', 'cell1', 'cell2']
 ```
 
 Spyder cell delimiter syntax is also supported:
