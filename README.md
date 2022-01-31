@@ -17,10 +17,8 @@ Install the extension
 
     pip install ipython-cells
     
-Convert an existing `.ipynb` to `.py`
+Convert an existing `.ipynb` to `.py`.  In Jupyter: `Cell > Run All`, then `File > Download As > python (.py)`.
 
-    jupyter nbconvert my_notebook.ipynb --to python
-    
 Execute cells in iPython
 
 ``` python
@@ -31,32 +29,12 @@ Execute cells in iPython
 array([1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j, 1.+0.j])
 ```
 
-`my_notebook.py` is automatically reloaded when changes are made.
+You can freely add/delete/rename cells in the downloaded `my_notebook.py`.  `my_notebook.py` is automatically reloaded when changes are made.
 
 
 ## Other Features
 
-Other commands:
-
-``` python
-# cell ranges - run all cells from beginning of file to cell2 (inclusive)
-%cell_run ^cell2
-hello
-world
-
-# cell ranges - run all cells from cell1 (inclusive) to end of file
-%cell_run cell1$
-hello
-world
-
-# list available cells for running
-%list_cells
-['__first', 'cell1', 'cell2']
-```
-
 Spyder cell delimiter syntax is also supported:
-
-`example.py`
 
 ``` python
 # %% cell1
@@ -66,16 +44,24 @@ print('hello')
 print('world')
 ```
 
-In IPython:
+Other commands:
 
 ``` python
->>> %load_ext ipython_cells
->>> %load_file example.py
->>> %cell_run cell1
+# cell ranges - run all cells from beginning of file to cell2 (inclusive)
+>>> %cell_run ^cell2
 hello
->>> %cell_run cell2
 world
+
+# cell ranges - run all cells from cell1 (inclusive) to end of file
+>>> %cell_run cell1$
+hello
+world
+
+# list available cells for running
+>>> %list_cells
+['__first', 'cell1', 'cell2']
 ```
+
 
 ## Automatically Load Extension
 
