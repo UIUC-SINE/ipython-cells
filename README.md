@@ -2,11 +2,11 @@
 
 This is an IPython extension for those who prefer to work in a terminal but still need the cell-by-cell execution provided by a Jupyter notebook.
 
-In Jupyter Notebook:
+Example Jupyter notebook:
 
 ![](notebook.png)
 
-With ipython-cells:
+Running exported notebook with ipython-cells:
 
 ![](commandline.png)
 
