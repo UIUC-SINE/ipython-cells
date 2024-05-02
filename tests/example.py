@@ -14,3 +14,10 @@ foo += 2
 # In[cell3]
 
 foo += 3
+
+# %%
+
+if True:
+    # this is an indented cell
+    # %% cell4
+    foo += 4
