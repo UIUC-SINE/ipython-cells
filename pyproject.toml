@@ -1,0 +1,39 @@
+[project]
+name = "ipython-cells"
+# setuptools normalizes semver '-' to '.'
+# avoid using hyphens: 1.2.3.post1
+version = "5.2.1"
+readme = "README.md"
+description = "Jupyter-like cell running in ipython"
+authors = [
+    { name = "Evan Widloski", email = "evan_gh@widloski.com" },
+    { name = "Ulaş Kamacι", email = "ukamaci2@illinois.edu" },
+]
+license = {text = "GPL-3.0"}
+keywords = ["jupyter", "ipython", "cells", "magic", "extension"]
+requires-python = ">=3.7"
+dependencies = [
+    "ipython",
+]
+classifiers = [
+    "Topic :: Software Development :: Libraries",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.urls]
+Homepage = "https://github.com/uiuc-sine/ipython-cells"
+Repository = "https://github.com/uiuc-sine/ipython-cells"
+Issues = "https://github.com/uiuc-sine/ipython-cells/issues"
+
+[tool.setuptools]
+packages = ["ipython_cells"]
+include-package-data = true
+
+[build-system]
+requires = ["setuptools>=59.0.0"]
+build-backend = 'setuptools.build_meta'
