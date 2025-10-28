@@ -1,11 +1,11 @@
 .ONESHELL:
 .SHELLFLAGS = -ec
 .SILENT:
-version := $(shell python -c "exec(open('ipython_cells/version.py').read());print(__version__)")
+version := $(shell python -c "from importlib import metadata; print(metadata.version('ipython-cells'))")
 
 .PHONY: dist
 dist:
-	python setup.py sdist
+	python -m build
 
 .PHONY: release
 release: dist

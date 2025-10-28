@@ -2,7 +2,7 @@
 name = "ipython-cells"
 # setuptools normalizes semver '-' to '.'
 # avoid using hyphens: 1.2.3.post1
-version = "5.2.1"
+version = "5.2.2"
 readme = "README.md"
 description = "Jupyter-like cell running in ipython"
 authors = [
